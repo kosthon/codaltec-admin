@@ -56,10 +56,10 @@ function TableCellSlider(props) {
           },
         }}
       >
-        <MenuItem>
+        {/* <MenuItem>
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
           Edit
-        </MenuItem>
+        </MenuItem> */}
 
         <MenuItem sx={{ color: 'error.main' }} onClick={() => deleteHandler(props.object.id)}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
