@@ -32,9 +32,9 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
-        { path: 'sliders', element: <SliderPage /> },
+        { path: 'user', element: <SliderPage /> },
         { path: 'products', element: <ProductsPage /> },
-        { path: 'blogs', element: <BlogPage /> },
+        { path: 'blog', element: <BlogPage /> },
         { path: 'pqrs', element: <PqrsPage /> },
         { path: 'contracts', element: <ContractPage /> },
         { path: 'internal-control', element: <ControlInternoPage /> },

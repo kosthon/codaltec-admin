@@ -7,7 +7,7 @@ import { UserListHead } from '../sections/@dashboard/user';
 // components
 import Scrollbar from '../components/scrollbar';
 import Iconify from '../components/iconify';
-import TableCellPortfolio from 'src/components/tableCellPortfolio/TableCellPortfolio';
+import TableCellPortfolio from '../components/tableCellPortfolio/TableCellPortfolio';
 
 // mock
 
@@ -54,15 +54,9 @@ export default function ProductsPage() {
               <Table>
                 <UserListHead headLabel={TABLE_HEAD} rowCount={portfolio.length} />
                 <TableBody>
-                  {portfolio.map((element) => {
-                    return (
-                      <TableCellPortfolio
-                        key={element.id}
-                        object={element}
-                        setRequestData={setRequestData}
-                      ></TableCellPortfolio>
-                    );
-                  })}
+                  {portfolio.map((element) => (
+                    <TableCellPortfolio key={element.id} object={element} setRequestData={setRequestData} />
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>

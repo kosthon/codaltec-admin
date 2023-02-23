@@ -6,7 +6,7 @@ import { Card, Table, Stack, TableBody, Container, Typography, TableContainer } 
 import { UserListHead } from '../sections/@dashboard/user';
 // components
 import Scrollbar from '../components/scrollbar';
-import TableCellPqrs from 'src/components/tableCellPqrs/TableCellPqrs';
+import TableCellPqrs from '../components/tableCellPqrs/TableCellPqrs';
 
 // mock
 
@@ -53,15 +53,9 @@ export default function PqrsPage() {
                 <UserListHead headLabel={TABLE_HEAD} rowCount={portfolio.length} />
                 <TableBody>
                   {portfolio
-                    .map((element) => {
-                      return (
-                        <TableCellPqrs
-                          key={element.id}
-                          object={element}
-                          setRequestData={setRequestData}
-                        ></TableCellPqrs>
-                      );
-                    })
+                    .map((element) => (
+                      <TableCellPqrs key={element.id} object={element} setRequestData={setRequestData} />
+                    ))
                     .reverse()}
                 </TableBody>
               </Table>

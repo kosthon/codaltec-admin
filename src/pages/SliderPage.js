@@ -6,7 +6,7 @@ import { Card, Table, Stack, Button, TableBody, Container, Typography, TableCont
 // components
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
-import TableCellSlider from 'src/components/tableCellSlider/TableCellSlider';
+import TableCellSlider from '../components/tableCellSlider/TableCellSlider';
 // sections
 import { UserListHead } from '../sections/@dashboard/user';
 // mock
@@ -55,15 +55,9 @@ export default function SliderPage() {
               <Table>
                 <UserListHead headLabel={TABLE_HEAD} rowCount={sliders.length} />
                 <TableBody>
-                  {sliders.map((element) => {
-                    return (
-                      <TableCellSlider
-                        key={element.id}
-                        object={element}
-                        setRequestData={setRequestData}
-                      ></TableCellSlider>
-                    );
-                  })}
+                  {sliders.map((element) => (
+                    <TableCellSlider key={element.id} object={element} setRequestData={setRequestData} />
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>

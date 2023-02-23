@@ -24,8 +24,9 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
       sx={{
         width: 40,
         height: 40,
-        display: 'inline-flex',
-        backgroundColor: 'rgba(145, 158, 171, 0.16)',
+        display: 'flex',
+        justifyContent: 'center',
+        margin: '0 auto',
         borderRadius: '50%',
         padding: '5px',
         ...sx,
@@ -40,11 +41,7 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
     return <>{logo}</>;
   }
 
-  return (
-    <Link to="/" component={RouterLink} sx={{ display: 'contents' }}>
-      {logo}
-    </Link>
-  );
+  return <Box>{logo}</Box>;
 });
 
 Logo.propTypes = {

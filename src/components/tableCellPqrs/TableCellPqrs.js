@@ -26,10 +26,14 @@ function TableCellPqrs(props) {
       </TableCell>
 
       <TableCell align="left" style={{ width: 200 }}>
-        Tipo de persona: {props.object.typePerson} <br></br>
-        Nombre: {props.object.name} {props.object.apellidos} <br></br>
-        Documento: {props.object.typeDocument} - {props.object.document} <br></br>
-        Mail: {props.object.email}
+        <p>Tipo de persona: {props.object.typePerson}</p>
+        <p>
+          Nombre: {props.object.name} {props.object.apellidos}
+        </p>
+        <p>
+          Documento: {props.object.typeDocument} - {props.object.document}
+        </p>
+        <p>Mail: {props.object.email}</p>
       </TableCell>
 
       <TableCell style={{ width: 120 }} align="left">

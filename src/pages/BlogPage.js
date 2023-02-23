@@ -1,13 +1,14 @@
 import { Helmet } from 'react-helmet-async';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+
 // @mui
 import { Card, Table, Stack, Button, TableBody, Container, Typography, TableContainer } from '@mui/material';
 import { UserListHead } from '../sections/@dashboard/user';
 // components
+import TableCellBlogs from '../components/tableCellBlogs/TableCellBlogs';
 import Scrollbar from '../components/scrollbar';
 import Iconify from '../components/iconify';
-import TableCellBlogs from 'src/components/tableCellBlogs/TableCellBlogs';
 
 // mock
 
@@ -56,15 +57,9 @@ export default function BlogPage() {
                 <UserListHead headLabel={TABLE_HEAD} rowCount={portfolio.length} />
                 <TableBody>
                   {portfolio
-                    .map((element) => {
-                      return (
-                        <TableCellBlogs
-                          key={element.id}
-                          object={element}
-                          setRequestData={setRequestData}
-                        ></TableCellBlogs>
-                      );
-                    })
+                    .map((element) => (
+                      <TableCellBlogs key={element.id} object={element} setRequestData={setRequestData} />
+                    ))
                     .reverse()}
                 </TableBody>
               </Table>

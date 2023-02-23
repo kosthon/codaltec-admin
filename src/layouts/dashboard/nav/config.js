@@ -13,7 +13,7 @@ const navConfig = [
   },
   {
     title: 'Slider',
-    path: '/dashboard/user',
+    path: '/dashboard/sliders',
     icon: icon('ic_user'),
   },
   {
@@ -23,7 +23,7 @@ const navConfig = [
   },
   {
     title: 'Noticias',
-    path: '/dashboard/blog',
+    path: '/dashboard/blogs',
     icon: icon('ic_blog'),
   },
   {
