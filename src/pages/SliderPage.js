@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
 // @mui
 import {
   Card,
@@ -14,6 +16,10 @@ import {
   Box,
   Modal,
   Input,
+  FormControl,
+  InputLabel,
+  FormHelperText,
+  TextField,
 } from '@mui/material';
 // components
 import Iconify from '../components/iconify';
@@ -33,17 +39,27 @@ const TABLE_HEAD = [
 ];
 
 const style = {
+  display: 'flex',
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 'auto',
+  minWidth: 300,
   bgcolor: 'background.paper',
   boxShadow: 24,
   pt: 2,
   px: 4,
   pb: 3,
   borderRadius: 4,
+  flexDirection: 'column',
+};
+const boxForm = {
+  display: 'flex',
+  flexDirection: 'column',
+};
+const formControl = {
+  margin: 1,
 };
 // ----------------------------------------------------------------------
 
@@ -52,18 +68,82 @@ export default function SliderPage() {
   const [sliders, setSliders] = useState([]);
   const [requestData, setRequestData] = useState(new Date());
 
+  const [updateTable, setUpdateTable] = useState(new Date());
+
+  const handleCreateSliderSuccess = () => {
+    setUpdateTable(new Date());
+  };
+
   useEffect(() => {
     axios.get(url).then((response) => {
       setSliders(response.data);
     });
-  }, [requestData]);
+  }, [requestData, updateTable]);
 
-  const [open, setOpen] = useState(null);
+  const [open, setOpen] = useState(false);
   const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
+    setOpen(!false);
   };
   const handleCloseMenu = () => {
-    setOpen(null);
+    setOpen(false);
+  };
+
+  const [file, setFile] = useState('');
+  const [titleEsp, setTitleEsp] = useState('');
+  const [titleEng, setTitleEng] = useState('');
+  const [despEsp, setDespEsp] = useState('');
+  const [despEng, setDespEng] = useState('');
+
+  const onInputFileChange = (e) => {
+    console.log(e.target.files[0]);
+    setFile(e.target.files[0]);
+  };
+
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+
+  const onSubmitForm = async (e) => {
+    e.preventDefault();
+    const dataFile = new FormData();
+
+    dataFile.append('image', file);
+    dataFile.append('esTitle', titleEsp);
+    dataFile.append('enTitle', titleEng);
+    dataFile.append('esDescription', despEsp);
+    dataFile.append('enDescription', despEng);
+
+    await axios
+      .post('http://localhost:3000/api/v1/sliders', dataFile, config)
+      .then((response) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Elemento creado',
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        console.log(response);
+        handleCreateSliderSuccess();
+        setOpen(false);
+        resetInputs();
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Por favor digite datos validos',
+          showConfirmButton: true,
+        });
+      });
+  };
+
+  const resetInputs = () => {
+    setFile('');
+    setTitleEsp('');
+    setTitleEng('');
+    setDespEsp('');
+    setDespEng('');
   };
 
   return (
@@ -81,22 +161,58 @@ export default function SliderPage() {
             Crear Slider
           </Button>
 
-          <Modal
-            open={open}
-            onClose={handleCloseMenu}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
+          <Modal open={open !== null && open} onClose={() => setOpen(false)}>
             <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
+              <Typography id="modal-modal-title" variant="h4" component="h1">
                 Ingrese los campos para crear un Slider
               </Typography>
-              <form>
-                <Input type="file" />
+              <form method="POST">
+                <Box sx={boxForm}>
+                  <FormControl sx={formControl}>
+                    <FormHelperText id="my-helper-text">Adjunte una imagen por favor.</FormHelperText>
+                    <Input type="file" name="file" onChange={onInputFileChange} />
+                  </FormControl>
+
+                  <FormControl sx={formControl}>
+                    <InputLabel htmlFor="my-input">Título en Español</InputLabel>
+                    <Input type="text" name="titleEsp" onChange={(e) => setTitleEsp(e.target.value)} />
+                  </FormControl>
+
+                  <FormControl sx={formControl}>
+                    <InputLabel htmlFor="my-input">Título en Ingles</InputLabel>
+                    <Input type="text" name="titleEng" onChange={(e) => setTitleEng(e.target.value)} />
+                  </FormControl>
+
+                  <FormControl sx={formControl}>
+                    <TextField
+                      label="Descripción en Español"
+                      multiline
+                      rows={4}
+                      name="despEsp"
+                      onChange={(e) => setDespEsp(e.target.value)}
+                    />
+                  </FormControl>
+
+                  <FormControl sx={formControl}>
+                    <TextField
+                      label="Descripción en Ingles"
+                      multiline
+                      rows={4}
+                      name="despEng"
+                      onChange={(e) => setDespEng(e.target.value)}
+                    />
+                  </FormControl>
+
+                  <Stack spacing={1}>
+                    <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={onSubmitForm}>
+                      Guardar
+                    </Button>
+                    <Button variant="outlined" onClick={handleCloseMenu}>
+                      Cerrar
+                    </Button>
+                  </Stack>
+                </Box>
               </form>
-              {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-              </Typography> */}
             </Box>
           </Modal>
         </Stack>

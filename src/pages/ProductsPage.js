@@ -35,7 +35,7 @@ export default function ProductsPage() {
   return (
     <>
       <Helmet>
-        <title> Portafolio | Minimal UI </title>
+        <title> Portafolio | CODALTEC </title>
       </Helmet>
 
       <Container>
