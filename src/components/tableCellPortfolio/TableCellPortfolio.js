@@ -66,14 +66,14 @@ function TableCellPortfolio(props) {
 
   const deleteHandler = async (id) => {
     await axios
-      .delete(`http://localhost:3000/api/v1/business/${id}`)
+      .delete(`https://codaltec-api.website:3000/api/v1/business/${id}`)
       .then(props.setRequestData(new Date()))
       .catch((err) => console.log(err));
   };
 
   const deleteHandlerProduct = async (id) => {
     await axios
-      .delete(`http://localhost:3000/api/v1/products/${id}`)
+      .delete(`https://codaltec-api.website:3000/api/v1/products/${id}`)
       .then(props.setRequestData(new Date()))
       .catch((err) => console.log(err));
   };
@@ -132,7 +132,7 @@ function TableCellPortfolio(props) {
     };
 
     await axios
-      .post(`http://localhost:3000/api/v1/products`, dataFile, config)
+      .post(`https://codaltec-api.website:3000/api/v1/products`, dataFile, config)
       .then((response) => {
         Swal.fire({
           icon: 'success',
@@ -219,7 +219,7 @@ function TableCellPortfolio(props) {
                     <TableCell>
                       <img
                         alt={props.object.esTitle}
-                        src={`http://localhost:3000/public/images/${element.image}`}
+                        src={`https://codaltec-api.website:3000/public/images/${element.image}`}
                         width="100"
                       />
                     </TableCell>

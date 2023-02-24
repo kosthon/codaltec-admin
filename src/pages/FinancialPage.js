@@ -64,7 +64,7 @@ const formControl = {
 // ----------------------------------------------------------------------
 
 export default function FinancialPage() {
-  const url = 'http://localhost:3000/api/v1/financial/';
+  const url = 'https://codaltec-api.website:3000:3000/api/v1/financial/';
   const [portfolio, setPortfolio] = useState([]);
   const [requestData, setRequestData] = useState(new Date());
 
@@ -110,7 +110,7 @@ export default function FinancialPage() {
     };
 
     await axios
-      .post('http://localhost:3000/api/v1/financial', dataFile, config)
+      .post('https://codaltec-api.website:3000/api/v1/financial', dataFile, config)
       .then((response) => {
         Swal.fire({
           icon: 'success',

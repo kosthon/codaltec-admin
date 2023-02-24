@@ -6,7 +6,7 @@ import Iconify from '../iconify/Iconify';
 function TableCellPqrs(props) {
   const deleteHandler = async (id) => {
     await axios
-      .delete(`http://localhost:3000/api/v1/pqrs/${id}`)
+      .delete(`https://codaltec-api.website:3000/api/v1/pqrs/${id}`)
       .then(props.setRequestData(new Date()))
       .catch((err) => console.log(err));
   };
@@ -45,7 +45,7 @@ function TableCellPqrs(props) {
         <a
           target="_blank"
           download
-          href={`http://localhost:3000/public/documents/${props.object.file}`}
+          href={`https://codaltec-api.website:3000/public/documents/${props.object.file}`}
           rel="noopener noreferrer"
         >
           <img alt="" src="/assets/icons/carpeta.svg" style={{ width: 30, height: 30 }} />

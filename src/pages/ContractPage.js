@@ -69,7 +69,7 @@ const formControl = {
 // ----------------------------------------------------------------------
 
 export default function ContractPage() {
-  const url = 'http://localhost:3000/api/v1/contract/';
+  const url = 'https://codaltec-api.website:3000/api/v1/contract/';
   const [portfolio, setPortfolio] = useState([]);
   const [requestData, setRequestData] = useState(new Date());
 
@@ -129,7 +129,7 @@ export default function ContractPage() {
     };
 
     await axios
-      .post('http://localhost:3000/api/v1/contract', dataFile, config)
+      .post('https://codaltec-api.website:3000/api/v1/contract', dataFile, config)
       .then((response) => {
         Swal.fire({
           icon: 'success',

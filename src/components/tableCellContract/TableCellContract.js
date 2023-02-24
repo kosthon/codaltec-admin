@@ -6,7 +6,7 @@ import Iconify from '../iconify/Iconify';
 function TableCellContract(props) {
   const deleteHandler = async (id) => {
     await axios
-      .delete(`http://localhost:3000/api/v1/contract/${id}`)
+      .delete(`https://codaltec-api.website:3000/api/v1/contract/${id}`)
       .then(props.setRequestData(new Date()))
       .catch((err) => console.log(err));
   };
@@ -39,7 +39,7 @@ function TableCellContract(props) {
         <a
           target="_blank"
           download
-          href={`http://localhost:3000/public/documents/${props.object.file}`}
+          href={`https://codaltec-api.website:3000/public/documents/${props.object.file}`}
           rel="noopener noreferrer"
         >
           <img alt="" src="/assets/icons/carpeta.svg" style={{ width: 30, height: 30 }} />
@@ -69,10 +69,10 @@ function TableCellContract(props) {
           },
         }}
       >
-        <MenuItem>
+        {/* <MenuItem>
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
           Edit
-        </MenuItem>
+        </MenuItem> */}
 
         <MenuItem sx={{ color: 'error.main' }} onClick={() => deleteHandler(props.object.id)}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />

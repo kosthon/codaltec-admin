@@ -6,7 +6,7 @@ import Iconify from '../iconify/Iconify';
 function TableCellBlogs(props) {
   const deleteHandler = async (id) => {
     await axios
-      .delete(`http://localhost:3000/api/v1/news/${id}`)
+      .delete(`https://codaltec-api.website:3000/api/v1/news/${id}`)
       .then(props.setRequestData(new Date()))
       .catch((err) => console.log(err));
   };
@@ -30,7 +30,11 @@ function TableCellBlogs(props) {
       <TableCell align="left">{props.object.esDescription}</TableCell>
 
       <TableCell align="left">
-        <img alt={props.object.esTitle} src={`http://localhost:3000/public/images/${props.object.image}`} width="100" />
+        <img
+          alt={props.object.esTitle}
+          src={`https://codaltec-api.website:3000/public/images/${props.object.image}`}
+          width="100"
+        />
       </TableCell>
 
       <TableCell align="right">

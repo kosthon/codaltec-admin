@@ -42,7 +42,7 @@ const navConfig = [
     icon: icon('ic_lock'),
   },
   {
-    title: 'Contabilidad',
+    title: 'Estados Financieros',
     path: '/dashboard/financial',
     icon: icon('ic_lock'),
   },

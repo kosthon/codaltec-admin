@@ -64,7 +64,7 @@ const formControl = {
 // ----------------------------------------------------------------------
 
 export default function SliderPage() {
-  const url = 'http://localhost:3000/api/v1/sliders/';
+  const url = 'https://codaltec-api.website:3000/api/v1/sliders/';
   const [sliders, setSliders] = useState([]);
   const [requestData, setRequestData] = useState(new Date());
 
@@ -116,7 +116,7 @@ export default function SliderPage() {
     dataFile.append('enDescription', despEng);
 
     await axios
-      .post('http://localhost:3000/api/v1/sliders', dataFile, config)
+      .post('https://codaltec-api.website:3000/api/v1/sliders', dataFile, config)
       .then((response) => {
         Swal.fire({
           icon: 'success',

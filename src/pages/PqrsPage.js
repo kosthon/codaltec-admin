@@ -23,7 +23,7 @@ const TABLE_HEAD = [
 // ----------------------------------------------------------------------
 
 export default function PqrsPage() {
-  const url = 'http://localhost:3000/api/v1/pqrs/';
+  const url = 'https://codaltec-api.website:3000/api/v1/pqrs/';
   const [portfolio, setPortfolio] = useState([]);
   const [requestData, setRequestData] = useState(new Date());
 

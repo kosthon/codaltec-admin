@@ -65,7 +65,7 @@ const formControl = {
 // ----------------------------------------------------------------------
 
 export default function BlogPage() {
-  const url = 'http://localhost:3000/api/v1/news/';
+  const url = 'https://codaltec-api.website:3000/api/v1/news/';
   const [portfolio, setPortfolio] = useState([]);
   const [requestData, setRequestData] = useState(new Date());
 
@@ -117,7 +117,7 @@ export default function BlogPage() {
     };
 
     await axios
-      .post('http://localhost:3000/api/v1/news', dataFile, config)
+      .post('https://codaltec-api.website:3000/api/v1/news', dataFile, config)
       .then((response) => {
         Swal.fire({
           icon: 'success',

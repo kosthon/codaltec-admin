@@ -29,7 +29,7 @@ export default function LoginForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await axios
-      .post('http://localhost:3000/api/v1/auth/login/', data, {
+      .post('https://codaltec-api.website:3000/api/v1/auth/login/', data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
