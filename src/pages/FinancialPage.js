@@ -64,7 +64,7 @@ const formControl = {
 // ----------------------------------------------------------------------
 
 export default function FinancialPage() {
-  const url = 'https://codaltec-api.website:3000:3000/api/v1/financial/';
+  const url = 'https://codaltec-api.website:3000/api/v1/financial/';
   const [portfolio, setPortfolio] = useState([]);
   const [requestData, setRequestData] = useState(new Date());
 

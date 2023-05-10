@@ -93,18 +93,19 @@ export default function ProductsPage() {
   const [titleEng, setTitleEng] = useState('');
   const [despEsp, setDespEsp] = useState('');
   const [despEng, setDespEng] = useState('');
+  const [youtubeValue, setYoutubeValue] = useState('');
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
-    const dataFile = new FormData();
-
-    dataFile.append('esName', titleEsp);
-    dataFile.append('enName', titleEng);
-    dataFile.append('esDescription', despEsp);
-    dataFile.append('enDescription', despEng);
-
     await axios
-      .post('https://codaltec-api.website:3000/api/v1/business', dataFile)
+      .post('https://codaltec-api.website:3000/api/v1/business/', {
+        youtube: youtubeValue,
+        icon: 'https://codaltec.com/assets/Logos/Codaltec_Icono.svg',
+        esName: titleEsp,
+        enName: titleEng,
+        esDescription: despEsp,
+        enDescription: despEng
+      })
       .then((response) => {
         Swal.fire({
           icon: 'success',
@@ -134,6 +135,9 @@ export default function ProductsPage() {
     setDespEng('');
   };
 
+  portfolio.map((elem) => (
+    console.log(elem.id)
+  ))
 
   return (
     <>
@@ -187,6 +191,11 @@ export default function ProductsPage() {
                     />
                   </FormControl>
 
+                  <FormControl sx={formControl}>
+                    <InputLabel htmlFor="my-input">Link de youtube</InputLabel>
+                    <Input type="text" name="youtubeValue" onChange={(e) => setYoutubeValue(e.target.value)} />
+                  </FormControl>
+
                   <Stack spacing={1}>
                     <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={onSubmitForm}>
                       Guardar
@@ -209,7 +218,7 @@ export default function ProductsPage() {
                 <UserListHead headLabel={TABLE_HEAD} rowCount={portfolio.length} />
                 <TableBody>
                   {portfolio.map((element) => (
-                    <TableCellPortfolio key={element.id} object={element} setRequestData={setRequestData} />
+                    <TableCellPortfolio key={element.id} id={element.id} object={element} setRequestData={setRequestData} />
                   ))}
                 </TableBody>
               </Table>

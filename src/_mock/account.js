@@ -1,8 +1,7 @@
 // ----------------------------------------------------------------------
 
 const account = {
-  displayName: 'Alejandro Forero',
-  email: 'nforero@codaltec.com',
+  displayName: 'CODALTEC',
   photoURL: '/assets/images/avatars/avatar_default.jpg',
 };
 

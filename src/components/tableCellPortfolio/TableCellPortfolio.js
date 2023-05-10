@@ -1,27 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Popover,
   TableRow,
   MenuItem,
   TableCell,
   IconButton,
-  Card,
   Table,
   Stack,
   Button,
   TableBody,
-  Container,
   Typography,
-  TableContainer,
   Box,
   Modal,
-  Input,
-  FormControl,
-  InputLabel,
-  FormHelperText,
-  TextField,
 } from '@mui/material';
 import Iconify from '../iconify/Iconify';
 import { UserListHead } from '../../sections/@dashboard/user';
@@ -153,9 +146,10 @@ function TableCellPortfolio(props) {
       });
   };
 
-  const randomNum = Math.floor(Math.random() * 10) + 1;
+  console.log(props);
+
   return (
-    <TableRow hover key={props.object.id} tabIndex={-1} role="checkbox">
+    <TableRow hover key={props.id} tabIndex={-1} role="checkbox">
       <TableCell component="th" scope="row">
         {props.object.id}
       </TableCell>
@@ -213,7 +207,7 @@ function TableCellPortfolio(props) {
               <UserListHead headLabel={TABLE_HEAD} />
               <TableBody>
                 {props.object.products.map((element) => (
-                  <TableRow key={(element.id * randomNum) / props.object.id} id={element.id + props.object.id}>
+                  <TableRow key={element.id} id={element.id }>
                     <TableCell width={70}>{element.esName}</TableCell>
                     <TableCell width={200}>{element.esDescription.slice(0, 80)}...</TableCell>
                     <TableCell>
