@@ -79,7 +79,7 @@ export default function ProductsPage() {
     axios.get(url).then((response) => {
       setPortfolio(response.data);
     });
-  }, [requestData]);
+  }, []);
 
   const [open, setOpen] = useState(false);
   const handleOpenMenu = (event) => {
@@ -135,9 +135,6 @@ export default function ProductsPage() {
     setDespEng('');
   };
 
-  portfolio.map((elem) => (
-    console.log(elem.id)
-  ))
 
   return (
     <>
@@ -217,8 +214,8 @@ export default function ProductsPage() {
               <Table>
                 <UserListHead headLabel={TABLE_HEAD} rowCount={portfolio.length} />
                 <TableBody>
-                  {portfolio.map((element) => (
-                    <TableCellPortfolio key={element.id} id={element.id} object={element} setRequestData={setRequestData} />
+                  {portfolio.map((element, index) => (
+                    <TableCellPortfolio key={`${element.id}-${index}`} id={element.id} object={element} setRequestData={setRequestData} />
                   ))}
                 </TableBody>
               </Table>

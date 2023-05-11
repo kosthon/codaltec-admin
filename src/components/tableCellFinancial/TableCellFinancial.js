@@ -1,15 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Popover, TableRow, MenuItem, TableCell, IconButton } from '@mui/material';
+import Swal from 'sweetalert2';
 import Iconify from '../iconify/Iconify';
 
+
 function TableCellFinancial(props) {
+  const { object } = props;
+  const [data, setData] = useState([])
+  const [deleteCount, setDeleteCount] = useState(false);
+
+  useEffect(() => {
+    setData(object);
+  }, [deleteCount, object]);
+
+  const handleCreateElementSuccess = () => {
+    setDeleteCount(prevState => !prevState);
+    setData(object); // Actualizar los datos en el estado local
+  };
+
   const deleteHandler = async (id) => {
     await axios
       .delete(`https://codaltec-api.website:3000/api/v1/financial/${id}`)
-      .then(props.setRequestData(new Date()))
+      .then((response) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Elemento Eliminado',
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        handleCreateElementSuccess()
+      })
       .catch((err) => console.log(err));
+      
   };
+
   const [open, setOpen] = useState(null);
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -18,19 +43,20 @@ function TableCellFinancial(props) {
   const handleCloseMenu = () => {
     setOpen(null);
   };
+
   return (
-    <TableRow hover key={props.object.id} tabIndex={-1} role="checkbox">
+    <TableRow hover key={data.id} tabIndex={-1} role="checkbox">
       <TableCell component="th" scope="row">
-        {props.object.id}
+        {data.id}
       </TableCell>
 
-      <TableCell align="left">{props.object.name}</TableCell>
+      <TableCell align="left">{data.name}</TableCell>
 
       <TableCell align="left">
         <a
           target="_blank"
           download
-          href={`https://codaltec-api.website:3000/public/documents/${props.object.file}`}
+          href={`https://codaltec-api.website:3000/public/documents/${data.file}`}
           rel="noopener noreferrer"
         >
           <img alt="" src="/assets/icons/carpeta.svg" style={{ width: 30, height: 30 }} />
@@ -65,7 +91,7 @@ function TableCellFinancial(props) {
           Edit
         </MenuItem> */}
 
-        <MenuItem sx={{ color: 'error.main' }} onClick={() => deleteHandler(props.object.id)}>
+        <MenuItem sx={{ color: 'error.main' }} onClick={() => deleteHandler(data.id)}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
           Delete
         </MenuItem>

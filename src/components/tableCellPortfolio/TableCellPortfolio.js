@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,6 +15,11 @@ import {
   Typography,
   Box,
   Modal,
+  Input,
+  FormControl,
+  InputLabel,
+  FormHelperText,
+  TextField,
 } from '@mui/material';
 import Iconify from '../iconify/Iconify';
 import { UserListHead } from '../../sections/@dashboard/user';
@@ -35,7 +40,7 @@ const style = {
   width: 'auto',
   minWidth: 300,
   maxWidth: 900,
-  maxHeight: 600,
+  maxHeight: 800,
   bgcolor: 'background.paper',
   boxShadow: 24,
   pt: 2,
@@ -52,10 +57,19 @@ const table = {
 const formControl = {
   margin: 1,
 };
+const boxForm = {
+  display: 'flex',
+  flexDirection: 'column',
+};
 
 function TableCellPortfolio(props) {
+  const [propiedades, setPropiedades] = useState([])
+
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+
+  const [openProducts, setOpenProducts] = useState(false);
+  const [openModalProducts, setOpenModalProducts] = useState(false);
 
   const deleteHandler = async (id) => {
     await axios
@@ -78,16 +92,27 @@ function TableCellPortfolio(props) {
   const handleCloseMenu = () => {
     setOpen(null);
   };
-
+ // -----------------------------------------------------------------
   const handleOpenModal = (event) => {
     setOpenModal(!false);
+    
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
     setOpen(false);
   };
+// -----------------------------------------------------------------
+  const handleOpenModalProducts = (event) => {
+    setOpenModalProducts(!false);
+   
+  };
 
+  const handleCloseModalProducts = () => {
+    setOpenModalProducts(false);
+    setOpenProducts(false);
+  };
+// -----------------------------------------------------------------
   const onInputFileChange = (e) => {
     console.log(e.target.files[0]);
     setFile(e.target.files[0]);
@@ -146,10 +171,13 @@ function TableCellPortfolio(props) {
       });
   };
 
-  console.log(props);
+  console.log(props); 
 
+  useEffect(() => {
+    setPropiedades(props.object.products)
+  },[])
   return (
-    <TableRow hover key={props.id} tabIndex={-1} role="checkbox">
+    <TableRow tabIndex={-1} id={props.id}  >
       <TableCell component="th" scope="row">
         {props.object.id}
       </TableCell>
@@ -159,9 +187,9 @@ function TableCellPortfolio(props) {
       <TableCell align="left">{props.object.esDescription}</TableCell>
 
       <TableCell align="left">
-        {props.object.products.map((element) => (
-          <p key={element.id}>{element.esName}</p>
-        ))}
+        {props.object.products.map((product) => (
+          <p key={product.id}>{product.esName}</p>
+        ))} 
       </TableCell>
 
       <TableCell align="right">
@@ -206,36 +234,95 @@ function TableCellPortfolio(props) {
             <Table>
               <UserListHead headLabel={TABLE_HEAD} />
               <TableBody>
-                {props.object.products.map((element) => (
-                  <TableRow key={element.id} id={element.id }>
-                    <TableCell width={70}>{element.esName}</TableCell>
-                    <TableCell width={200}>{element.esDescription.slice(0, 80)}...</TableCell>
+                {propiedades.map((ele) => (
+                  <TableRow key={ele.id} id={ele.id }>
+                    <TableCell width={70}>{ele.esName}</TableCell>
+                    <TableCell width={200}>{ele.esDescription.slice(0, 80)}...</TableCell>
                     <TableCell>
                       <img
                         alt={props.object.esTitle}
-                        src={`https://codaltec-api.website:3000/public/images/${element.image}`}
+                        src={`https://codaltec-api.website:3000/public/images/${ele.image}`}
                         width="100"
                       />
                     </TableCell>
                     <TableCell>
-                      <MenuItem sx={{ color: 'error.main' }} onClick={() => deleteHandler(element.id)}>
+                      <MenuItem sx={{ color: 'error.main' }} onClick={() => deleteHandler(ele.id)}>
                         <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
                         Delete
                       </MenuItem>
                     </TableCell>
                   </TableRow>
-                ))}
+                ))} 
               </TableBody>
-            </Table>
+            </Table> 
           </Box>
 
           <Stack spacing={2}>
-            <Button variant="contained" onClick={handleCloseModal}>
+            <Button variant='contained' startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleOpenModalProducts}>
+              Crear producto
+            </Button>
+            <Button variant="outline" onClick={handleCloseModal}>
               Cerrar
             </Button>
           </Stack>
         </Box>
       </Modal>
+
+      <Modal  open={openModalProducts !== null && openModalProducts} onClose={() => setOpenModalProducts(false)}>
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h4" component="h1">
+            Ingrese los campos para crear una línea de
+          </Typography>
+          <form method="POST">
+            <Box sx={boxForm}>
+              <FormControl sx={formControl}>
+                <FormHelperText id="my-helper-text">Adjunte una imagen por favor.</FormHelperText>
+                <Input type="file" name="file" onChange={onInputFileChange} />
+              </FormControl>
+
+              <FormControl sx={formControl}>
+                <InputLabel htmlFor="my-input">Título en Español</InputLabel>
+                <Input type="text" name="esName" onChange={(e) => setTitleEsp(e.target.value)} />
+              </FormControl>
+
+              <FormControl sx={formControl}>
+                <InputLabel htmlFor="my-input">Título en Ingles</InputLabel>
+                <Input type="text" name="enName" onChange={(e) => setTitleEng(e.target.value)} />
+              </FormControl>
+
+              <FormControl sx={formControl}>
+                <TextField
+                  label="Descripción en Español"
+                  multiline
+                  rows={4}
+                  name="despEsp"
+                  onChange={(e) => setDespEsp(e.target.value)}
+                />
+              </FormControl>
+
+              <FormControl sx={formControl}>
+                <TextField
+                  label="Descripción en Ingles"
+                  multiline
+                  rows={4}
+                  name="despEng"
+                  onChange={(e) => setDespEng(e.target.value)}
+                />
+              </FormControl>
+
+              <Stack spacing={1}>
+                <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={onSubmitForm}>
+                  Guardar
+                </Button>
+                <Button variant="outlined" onClick={handleCloseMenu}>
+                  Cerrar
+                </Button>
+              </Stack>
+            </Box>
+          </form>
+        </Box>
+      </Modal> 
+
     </TableRow>
   );
 }
